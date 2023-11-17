@@ -39,6 +39,16 @@
   }
 }
 
+- (void)currentIconName:(CDVInvokedUrlCommand *)command 
+{
+    if ([self supportsAlternateIcons]) {
+        NSString *iconName = [[UIApplication sharedApplication] alternateIconName] ?: @""; // account for null
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:iconName];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Alternative icons not supported on this device"] callbackId:command.callbackId];
+    }
+}
 
 #pragma mark - Helper functions
 
