@@ -1,36 +1,63 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <plugin
-    id="cordova-plugin-app-icon-changer"
-    version="1.0.0"
-    xmlns="http://apache.org/cordova/ns/plugins/1.0">
-
-  <name>App Icon Changer</name>
-
-  <author>Eddy Verbruggen - @EddyVerbruggen</author>
-
-  <description>Change the homescreen icon of your app from code.</description>
-
-  <keywords>Icon Changer, Home icon, icon</keywords>
-
-  <license>MIT</license>
-
-  <engines>
-    <engine name="cordova" version=">=3.5.0"/>
-  </engines>
-
-  <js-module name="AppIconChanger" src="www/AppIconChanger.js">
-    <clobbers target="AppIconChanger"/>
-  </js-module>
-
-  <platform name="ios">
-    <config-file parent="/*" target="config.xml">
-      <feature name="AppIconChanger">
-        <param name="ios-package" value="AppIconChanger"/>
-      </feature>
-    </config-file>
-
-    <header-file src="src/ios/AppIconChanger.h"/>
-    <source-file src="src/ios/AppIconChanger.m"/>
-  </platform>
-
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-app-icon-changer" version="1.0.0">
+    <name>App Icon Changer</name>
+    <author>Eddy Verbruggen - @EddyVerbruggen</author>
+    <description>Change the homescreen icon of your app from code.</description>
+    <keywords>Icon Changer, Home icon, icon</keywords>
+    <license>MIT</license>
+    <engines>
+        <engine name="cordova" version=">=3.5.0"/>
+    </engines>
+    <js-module name="AppIconChanger" src="www/AppIconChanger.js">
+        <clobbers target="AppIconChanger"/>
+    </js-module>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="AppIconChanger">
+                <param name="ios-package" value="AppIconChanger"/>
+            </feature>
+        </config-file>
+        <!-- Info.plist -->
+        <!-- Add alternate icons config below
+        <config-file target="*-Info.plist" parent="CFBundleIcons">
+            <dict>
+                <key>CFBundleAlternateIcons</key>
+                <dict>
+                    <key>Example Icon Name</key>
+                    <dict>
+                        <key>CFBundleIconFiles</key>
+                        <array>
+                            <string>example_icon_filename</string>
+                        </array>
+                        <key>UIPrerenderedIcon</key>
+                        <false/>
+                    </dict>
+                </dict>
+            </dict>
+        </config-file>
+        <config-file target="*-Info.plist" parent="CFBundleIcons~ipad">
+            <dict>
+                <key>CFBundleAlternateIcons</key>
+                <dict>
+                    <key>Example Icon Name</key>
+                    <dict>
+                        <key>CFBundleIconFiles</key>
+                        <array>
+                            <string>example_icon_filename</string>
+                        </array>
+                        <key>UIPrerenderedIcon</key>
+                        <false/>
+                    </dict>
+                </dict>
+            </dict>
+        </config-file>
+        -->
+        <!-- Code -->
+        <header-file src="src/ios/AppIconChanger.h"/>
+        <source-file src="src/ios/AppIconChanger.m"/>
+        <!-- Copy resources -->
+        <!--  1784:  -->
+        <resource-file src="www/icons/sage_employee_benefits_1784/sage_employee_benefits_1784.png" target="sage_employee_benefits_1784.png"/>
+    </platform>
 </plugin>
