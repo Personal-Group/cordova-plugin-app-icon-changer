@@ -50,10 +50,30 @@
     }
 }
 
+- (void)getAppIcon:(CDVInvokedUrlCommand *)command 
+{
+	NSDictionary *options = command.arguments[0];
+ 	NSString *iconName = options[@"iconName"];
+  NSString *path = [[NSBundle mainBundle] pathForResource:iconName ofType:@"png"];
+
+  if (path) {
+      NSData *data = [NSData dataWithContentsOfFile:path];
+      if (data) {
+        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArrayBuffer:data] callbackId:command.callbackId];
+        return;
+      }
+  }
+    
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Could not get default app icon"] callbackId:command.callbackId];
+}
+
 #pragma mark - Helper functions
 
 - (BOOL) supportsAlternateIcons
 {
+    if (![[UIApplication sharedApplication] respondsToSelector:NSSelectorFromString(@"supportsAlternateIcons")]) {
+        return NO;
+    }
     return [[UIApplication sharedApplication] supportsAlternateIcons];
 }
 
