@@ -6,5 +6,7 @@
 - (void)changeIcon:(CDVInvokedUrlCommand *)command;
 - (void)currentIconName:(CDVInvokedUrlCommand *)command;
 - (void)getAppIcon:(CDVInvokedUrlCommand *)command;
+- (void)getAlternativeAppIconNames:(CDVInvokedUrlCommand *)command;
+- (void)getAlternativeAppIconByName:(CDVInvokedUrlCommand *)command;
 
 @end

@@ -66,6 +66,47 @@
     
     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Could not get requested icon"] callbackId:command.callbackId];
 }
+
+- (void)getAlternativeAppIconNames:(CDVInvokedUrlCommand *)command 
+{
+    NSDictionary *bundleIconsDict = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIcons"];
+    NSDictionary *altIcons = [bundleIconsDict objectForKey:@"CFBundleAlternateIcons"];
+    if (altIcons) {
+        NSArray *iconNames = [altIcons allKeys];        
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:iconNames];
+		
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        
+        return;
+    }
+    
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Failed to get names of alternative icons"] callbackId:command.callbackId];
+}
+
+- (void)getAlternativeAppIconByName:(CDVInvokedUrlCommand *)command 
+{
+	NSDictionary *options = command.arguments[0];
+ 	NSString *iconName = options[@"iconName"];
+
+    NSDictionary *bundleIconsDict = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIcons"];
+    NSDictionary *altIcons = [bundleIconsDict objectForKey:@"CFBundleAlternateIcons"];
+    if (altIcons) {
+        NSArray *filenames = [[altIcons objectForKey:iconName] objectForKey:@"CFBundleIconFiles"];
+        NSString *largestIconFile = [filenames lastObject];
+	    if (largestIconFile) {
+    		NSString *path = [[NSBundle mainBundle] pathForResource:largestIconFile ofType:@"png"];
+			if (path) {
+				NSData *data = [NSData dataWithContentsOfFile:path];
+				if (data) {
+ 					[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArrayBuffer:data] callbackId:command.callbackId];
+					return;
+			  	}
+			}
+	    }
+    }
+    
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Could not get requested icon"] callbackId:command.callbackId];
+
 }
 
 #pragma mark - Helper functions
