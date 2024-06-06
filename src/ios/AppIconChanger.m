@@ -64,7 +64,8 @@
       }
   }
     
-    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Could not get default app icon"] callbackId:command.callbackId];
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Could not get requested icon"] callbackId:command.callbackId];
+}
 }
 
 #pragma mark - Helper functions
